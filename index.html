@@ -123,7 +123,7 @@
             }
         }
 
-        /* Сканирующие линии */
+        /* Сканирующие линии - исправленная версия */
         .scan-lines {
             position: fixed;
             top: 0;
@@ -137,16 +137,18 @@
                 rgba(138, 43, 226, 0.03) 2px,
                 rgba(138, 43, 226, 0.03) 4px
             );
-            animation: scanMove 8s linear infinite;
+            background-size: 100% 100px;
+            animation: scanMove 4s linear infinite;
             z-index: -1;
+            pointer-events: none;
         }
 
         @keyframes scanMove {
             0% {
-                transform: translateY(0);
+                background-position: 0 0;
             }
             100% {
-                transform: translateY(100px);
+                background-position: 0 100px;
             }
         }
 
@@ -762,11 +764,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7); /* Полупрозрачный фон вместо черного */
+            background: rgba(0, 0, 0, 0.7);
             z-index: 2000;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(15px); /* Добавляем размытие фона */
+            backdrop-filter: blur(15px);
         }
 
         .modal-content {
@@ -1072,10 +1074,9 @@
         <!-- Главная страница -->
         <div class="main-content" id="mainPage">
             <div class="header">
-                <!-- Измененный порядок: сначала Maud, затем кнопки проектов, затем Активные проекты -->
                 <div class="main-title">Maud</div>
                 
-                <!-- Кнопки проектов теперь выше списка активных проектов -->
+                <!-- Кнопки проектов -->
                 <div class="menu-container">
                     <div class="menu-item" id="start">Start Code</div>
                     <div class="menu-item" id="problem">Problem Code</div>
@@ -1085,7 +1086,7 @@
                 
                 <div class="projects-subtitle">Активные проекты</div>
                 
-                <!-- Обновленный компактный контейнер для активных проектов -->
+                <!-- Контейнер для активных проектов -->
                 <div class="projects-status-container">
                     <div class="projects-status">
                         <div class="project-status-item">
@@ -1255,9 +1256,9 @@
     <div id="startModal" class="modal">
         <div class="modal-content">
             <h2>Подтверждение запуска</h2>
-            <p>Вы хотите запустить студию Start Code?</p> <!-- Измененный текст -->
+            <p>Вы хотите запустить студию Start Code?</p>
             <div class="modal-buttons">
-                <a href="https://maudcmd.github.io/MaUdCMD/" class="modal-btn">Да</a> <!-- Оставлена кнопка "Да" -->
+                <a href="https://maudcmd.github.io/MaUdCMD/" class="modal-btn">Да</a>
                 <button class="modal-btn no" onclick="closeModal('startModal')">Нет</button>
             </div>
         </div>
@@ -1274,7 +1275,6 @@
         </div>
     </div>
 
-    <!-- Новое модальное окно для Help Code -->
     <div id="helpModal" class="modal">
         <div class="modal-content">
             <h2>Подтверждение запуска</h2>
