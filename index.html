@@ -990,17 +990,14 @@
                     </div>
                     <span>Поддержка</span>
                 </div>
-                <div class="nav-btn" id="aboutBtn" onclick="showComingSoon('Ознакомление')">
+                <div class="nav-btn" id="newsBtn" onclick="toggleNews()">
                     <div class="nav-icon">
                         <svg class="icon-outline icon-medium" viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z"/>
                         </svg>
                     </div>
-                    <span>Ознакомление</span>
+                    <span>Новости</span>
                 </div>
-            </div>
-            <div class="news-controls" style="position: absolute; right: 20px; top: 10px;">
-                <button class="news-btn" onclick="toggleNews()">Новости</button>
             </div>
         </div>
         <div class="main-content" id="mainPage">
@@ -1010,7 +1007,7 @@
                     <div class="menu-item" id="start">Start Code</div>
                     <div class="menu-item" id="problem">Problem Code</div>
                     <div class="menu-item" id="help">Help Code</div>
-                    <div class="menu-item" id="fun">Fun Code</div>
+                    <div class="menu-item" id="fun" onclick="openFunCode()">Fun Code</div>
                 </div>
                 <div class="projects-subtitle">Активные проекты</div>
                 <div class="projects-status-container">
@@ -1074,6 +1071,56 @@
                 </div>
             </div>
             <div class="updates-list-container" id="updatesListContainer">
+                <!-- Новое крупное обновление -->
+                <div class="update-container blue-glow" onclick="copyUpdates(this)">
+                    <div class="update-header">
+                        <div class="update-project-name">
+                            <span class="version">Beta Test</span>
+                            Problem Code
+                        </div>
+                        <div class="update-date">15.11.2025</div>
+                    </div>
+                    <ul class="updates-list">
+                        <li class="update-item">Добавлено анимированные фоновые сферы с плавающей анимацией</li>
+                        <li class="update-item">Создано система переключения тем (темная/светлая)</li>
+                        <li class="update-item">Добавлено кастомизация цветов интерфейса</li>
+                        <li class="update-item">Создано модальные окна для настроек</li>
+                        <li class="update-item">Добавлено система поиска проектов</li>
+                        <li class="update-item">Создано функционал избранных проектов</li>
+                        <li class="update-item">Добавлено карточки проектов с ID</li>
+                        <li class="update-item">Создано система резервных копий настроек</li>
+                        <li class="update-item">Добавлено экспорт/импорт настроек в JSON</li>
+                        <li class="update-item">Создано инструкция по добавлению проектов</li>
+                        <li class="update-item">Добавлено адаптивный дизайн для мобильных</li>
+                        <li class="update-item">Создано локальное хранилище данных</li>
+                        <li class="update-item">Добавлено управление проектами через localStorage</li>
+                        <li class="update-item">Создано система уникальных ID проектов</li>
+                        <li class="update-item">Добавлено интерактивные элементы управления</li>
+                        <li class="update-item">Создано анимации и переходы</li>
+                        <li class="update-item">Добавлено валидация цветовых настроек</li>
+                        <li class="update-item">Создано обработка файлов для импорта</li>
+                        <li class="update-item">Добавлено статусы операций (успех/ошибка)</li>
+                        <li class="update-item">Создано навигация между разделами</li>
+                        <li class="update-item">Добавлено дебаунс для поиска</li>
+                    </ul>
+                </div>
+
+                <!-- Предыдущие обновления -->
+                <div class="update-container" onclick="copyUpdates(this)">
+                    <div class="update-header">
+                        <div class="update-project-name">
+                            <span class="version">Fix</span>
+                            Start Code
+                        </div>
+                        <div class="update-date">13.11.2025</div>
+                    </div>
+                    <ul class="updates-list">
+                        <li class="update-item">Исправлена консоль</li>
+                        <li class="update-item">Исправлен ввод кода</li>
+                        <li class="update-item">Исправлена ошибка с дублированием кода</li>
+                    </ul>
+                </div>
+
                 <div class="update-container blue-glow" onclick="copyUpdates(this)">
                     <div class="update-header">
                         <div class="update-project-name">
@@ -1215,10 +1262,11 @@
     </div>
     <div id="funModal" class="modal">
         <div class="modal-content">
-            <h2>Упс...</h2>
-            <p>Кажется данный проект находится в разработке или временно не доступен</p>
+            <h2>Подтверждение перехода</h2>
+            <p>Вы хотите перейти на платформу Fun Code?</p>
             <div class="modal-buttons">
-                <button class="modal-btn" onclick="closeModal('funModal')">Понятно</button>
+                <button class="modal-btn" onclick="confirmFunCode()">Да</button>
+                <button class="modal-btn no" onclick="closeModal('funModal')">Нет</button>
             </div>
         </div>
     </div>
@@ -1425,10 +1473,6 @@
                 openModal('helpModal');
             });
             
-            document.getElementById('fun').addEventListener('click', function() {
-                openModal('funModal');
-            });
-            
             window.addEventListener('click', function(event) {
                 const modals = document.querySelectorAll('.modal');
                 modals.forEach(function(modal) {
@@ -1445,6 +1489,15 @@
                     filterModal.style.display = 'none';
                 }
             });
+        }
+
+        function openFunCode() {
+            openModal('funModal');
+        }
+
+        function confirmFunCode() {
+            window.open('https://6000-firebase-studio-1763214909250.cluster-jgdkb37mtnfb4urxtja5guzqog.cloudworkstations.dev/', '_blank');
+            closeModal('funModal');
         }
 
         function copyUpdates(element) {
